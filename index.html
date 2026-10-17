@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Laser Maze</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- ======================= TITLE ======================= -->
+    <section id="screen-title" class="screen active">
+      <div class="stars-tex"></div>
+      <div class="title-inner">
+        <h1 class="logo">LASER<span>MAZE</span></h1>
+        <p class="tagline">Rotate the mirrors. Catch the light.</p>
+        <button id="btn-play" class="btn-primary">▶&nbsp; PLAY</button>
+        <p id="title-progress" class="meta-line">Next: Level 1 · 0/50 cleared</p>
+        <div class="howto">
+          <p><b>Tap</b> a mirror to rotate it 90°. Guide every laser into a target of its <b>own color</b>.</p>
+          <p class="dim">Keys: U undo · R reset · H hint · Esc back to map</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= LEVEL MAP ======================= -->
+    <section id="screen-map" class="screen">
+      <div class="stars-tex"></div>
+      <header class="map-head">
+        <button id="btn-map-back" class="btn-ghost">← Title</button>
+        <h2>SELECT LEVEL</h2>
+        <span id="map-progress" class="meta-line">0/50 cleared</span>
+      </header>
+      <div id="level-grid" class="level-grid"></div>
+      <p class="map-legend dim">Complete a level to unlock the next · clean no-hint solves keep your 🔥 streak</p>
+    </section>
+
+    <!-- ======================= GAME ======================= -->
+    <section id="screen-game" class="screen">
+      <div class="stars-tex"></div>
+      <header class="hud">
+        <button id="btn-exit" class="btn-ghost">← Map</button>
+        <div class="hud-title">
+          <span id="hud-level">Level 1 / 50</span>
+        </div>
+        <span class="hud-spacer" aria-hidden="true"></span>
+      </header>
+
+      <div id="board-wrap">
+        <canvas id="board"></canvas>
+      </div>
+
+      <footer class="game-actions">
+        <button id="btn-undo" class="btn-action">↩ Undo</button>
+        <button id="btn-reset" class="btn-action">⟲ Reset</button>
+        <button id="btn-hint" class="btn-action">💡 Hint</button>
+      </footer>
+
+      <div id="win-overlay" class="overlay hidden">
+        <div id="win-card" class="win-card">
+          <div id="win-cheer" class="win-cheer clear">🎉</div>
+          <h3 id="win-title">Level Clear!</h3>
+          <p id="win-detail"></p>
+          <div class="win-actions">
+            <button id="btn-win-map" class="btn-ghost">Levels</button>
+            <button id="btn-win-replay" class="btn-ghost">Replay</button>
+            <button id="btn-win-next" class="btn-primary">Next ➜</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- global settings toggle: a single three-bar inline icon, present on every
+       screen — the only entry point into settings -->
+  <button id="btn-dock" class="dock-toggle" title="Settings" aria-label="Settings">
+    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+  </button>
+
+  <!-- inline settings dock — drops below the ≡ icon, overlays whatever screen is up -->
+  <div id="settings-dock" class="hidden">
+    <div class="dock-head">
+      <span>SETTINGS</span>
+      <button id="btn-set-back" class="btn-ghost small" title="Close">✕</button>
+    </div>
+    <button id="btn-sound" class="btn-ghost dock-btn">🔊 Sound on</button>
+    <button id="btn-wipe" class="btn-ghost danger dock-btn">Reset progress</button>
+  </div>
+
+  <script src="js/engine.js"></script>
+  <script src="js/levels.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
