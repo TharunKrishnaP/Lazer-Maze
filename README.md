@@ -2,7 +2,8 @@
 
 A neon laser-puzzle game: rotate mirrors to guide color-matched lasers into
 every target. 50 handcrafted levels, sequential unlock, each verified solvable.
-Zero dependencies — open it or serve it anywhere.
+Progress resets every visit — each visit starts a fresh run. Zero dependencies
+— open it or serve it anywhere.
 
 ## How to play
 

@@ -1,9 +1,8 @@
-/* Laser Maze — progress + settings persistence (localStorage).
- * v4 schema: no star ratings, single visual theme — tracked via best-moves per
- * level plus a "clean solve" streak (no-hint solves, streak reset otherwise).
- * Fresh-return structure is written out inline (never spread DEFAULTS): a
- * shared `best: {}` reference would let completeLevel pollute it and make
- * reset() resurrect old records. */
+/* Laser Maze — progress + settings state (session-only).
+ * Nothing persists between visits: every page load starts a fresh run with
+ * progress back at Level 1, while progress/streaks/bests still behave normally
+ * within the current visit. `data` is tracked via best-moves per level plus a
+ * "clean solve" streak (no-hint solves, streak reset otherwise). */
 (function (root) {
   'use strict';
 
@@ -12,27 +11,14 @@
 
   let data = load();
 
+  /* Progress resets every visit: storage is wiped at startup and never written,
+   * so each page load begins a brand-new run (in-session progress still works). */
   function load() {
-    try {
-      const raw = root.localStorage && root.localStorage.getItem(KEY);
-      if (!raw) return { unlocked: 1, best: {}, streak: 0, bestStreak: 0, muted: false, seenIntro: false, msgCursor: 0 };
-      const parsed = JSON.parse(raw);
-      return {
-        unlocked: 1,
-        ...parsed,
-        best: { ...parsed.best },       // old `stars` field is simply dropped
-        streak: parsed.streak || 0,
-        bestStreak: parsed.bestStreak || 0,
-        msgCursor: parsed.msgCursor || 0, // rotating win-message position
-      };
-    } catch (e) {
-      return { unlocked: 1, best: {}, streak: 0, bestStreak: 0, muted: false, seenIntro: false, msgCursor: 0 };
-    }
+    try { root.localStorage && root.localStorage.removeItem(KEY); } catch (e) { /* private mode */ }
+    return { unlocked: 1, best: {}, streak: 0, bestStreak: 0, muted: false, seenIntro: false, msgCursor: 0 };
   }
 
-  function save() {
-    try { root.localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) { /* private mode */ }
-  }
+  function save() { /* nothing persists across visits by design */ }
 
   return (root.LaserStorage = {
     get data() { return data; },
